@@ -3,6 +3,7 @@ hex_input = "0000000001101023"
 
 # Convert to 64-bit binary string
 bin_input = bin(int(hex_input, 16))[2:].zfill(64)
+print(bin_input)
 
 # Standard DES Initial Permutation table
 IP = [
@@ -16,11 +17,32 @@ IP = [
 63, 55, 47, 39, 31, 23, 15, 7
 ]
 
-# Apply initial permutation
-permuted_bin = ''.join(bin_input[i-1] for i in IP)
+# Step 1: Apply the permutation to the input binary string.
+bin_input = '110101001011'  # Example binary input
+IP = [2, 1, 4, 3, 6, 5]  # Example permutation positions
 
-# Convert back to hexadecimal
-hex_output = hex(int(permuted_bin, 2))[2:].zfill(16).upper()
+# Initialize an empty string for the permuted binary output
+permuted_bin = ""
+
+# Iterate over each index in IP to reorder the bits
+for i in IP:
+    # Since the positions in IP are 1-based (e.g., 1, 2, 3...), we subtract 1 to make them 0-based
+    permuted_bin += bin_input[i-1]
+
+# Step 2: Convert permuted binary to hexadecimal
+# Convert permuted binary to an integer
+decimal_value = int(permuted_bin, 2)
+print("Decimal Value:", decimal_value)
+
+# Convert the decimal integer to hexadecimal
+hex_value = hex(decimal_value)
+print("Hex Value (with '0x' prefix):", hex_value)
+
+# Remove the '0x' prefix and pad the hexadecimal value to 16 characters
+hex_output = hex_value[2:].zfill(16).upper()
+
+print("Hex Output (Final):", hex_output)
+
 
 print("After Initial Permutation:")
 print("Hex:", hex_output)
